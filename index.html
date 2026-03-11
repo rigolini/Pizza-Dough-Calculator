@@ -33,10 +33,10 @@ h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
 /* ── Phone (up to 480px) ── */
 @media(max-width:480px){
-  .container{padding:0 14px 60px}
+  .container{padding:0 14px 60px;width:100%;overflow-x:hidden}
   h1{font-size:1.35rem}
   .subtitle{font-size:.78rem}
-  .hero{border-radius:0}
+  .hero{border-radius:0;margin-left:-14px;margin-right:-14px;width:calc(100% + 28px)}
   header{padding-top:12px;margin-bottom:12px}
   .lang-bar{gap:4px}.lang-btn{padding:3px 8px;font-size:.68rem}
   .preset-bar{gap:4px;margin-top:8px}.preset-btn{padding:5px 10px;font-size:.7rem}
@@ -44,10 +44,10 @@ h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-
   .guide-btn{padding:10px 20px;font-size:.85rem}
   .grid{grid-template-columns:1fr;gap:12px;margin-bottom:14px}
   .card{padding:16px 14px;border-radius:12px}
-  .card-title{font-size:.92rem;margin-bottom:12px;padding-bottom:8px}
-  .field-row label{font-size:.8rem}
-  .field-row input[type="number"]{width:90px;padding:10px 10px;font-size:1rem;-webkit-appearance:none}
-  input[type="number"]{padding:10px 10px;font-size:1rem;-webkit-appearance:none;border-radius:10px}
+  .card-title{font-size:1rem;margin-bottom:12px;padding-bottom:8px}
+  .field-row label{font-size:.9rem}
+  .field-row input[type="number"]{width:60px;padding:10px 6px;font-size:1rem;-webkit-appearance:none}
+  input[type="number"]{padding:10px 6px;font-size:1rem;-webkit-appearance:none;border-radius:10px}
   .protein-grid{grid-template-columns:1fr;gap:10px}
   .recipe-cols{flex-direction:column!important}
   .recipe-cols{flex-direction:column}
@@ -56,11 +56,11 @@ h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-
   .summary-value{font-size:1.25rem}
   .summary-divider{display:none}
   .ing-card{padding:10px 12px;gap:10px;border-radius:8px}
-  .ing-icon{font-size:1.2rem;width:28px}
-  .ing-net{font-size:1.15rem}
-  .ing-name{font-size:.78rem}
-  .ing-total,.ing-biga{font-size:.68rem}
-  .note{font-size:.7rem}
+  .ing-icon{font-size:1.3rem;width:28px}
+  .ing-net{font-size:1.25rem}
+  .ing-name{font-size:.85rem}
+  .ing-total,.ing-biga{font-size:.73rem}
+  .note{font-size:.78rem}
   .help-btn{width:22px;height:22px;font-size:.7rem}
   .modal{padding:20px 16px;border-radius:14px;max-height:90vh}
   .modal h2{font-size:1.15rem}
@@ -133,6 +133,23 @@ h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-
 @media(max-width:480px){#tutPanel.tut-welcome{width:auto;max-width:none}}
 @media(max-width:480px){
   #tutPanel{left:10px!important;right:10px!important;bottom:16px!important;top:auto!important;width:auto;max-width:none}
+}
+/* ── Number input spinner buttons ── */
+.num-wrap{display:inline-flex;align-items:stretch;flex-shrink:0}
+.num-btn{display:none;width:36px;background:var(--surface2);border:1px solid var(--border);color:var(--accent);font-size:1.3rem;line-height:1;font-weight:400;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Source Sans 3',sans-serif;transition:background .1s}
+.num-btn:active{background:var(--accent-pale)}
+.num-btn:first-child{border-radius:8px 0 0 8px;border-right:none}
+.num-btn:last-child{border-radius:0 8px 8px 0;border-left:none}
+.num-wrap input[type="number"]{border-radius:0;text-align:center}
+@media(max-width:900px),(hover:none) and (pointer:coarse){
+  .num-btn{display:flex}
+  .num-wrap input[type="number"]{border-left:none;border-right:none}
+}
+@media(max-width:480px){
+  .num-wrap input[type="number"]{width:60px;padding:10px 4px}
+  .field-row input[type="number"]{width:60px}
+  .protein-grid .num-wrap{width:100%}
+  .protein-grid .num-wrap input[type="number"]{flex:1}
 }
 </style>
 </head>
@@ -211,13 +228,13 @@ function render(){
   <button class="guide-btn" onclick="openGuide()">${t('guideBtn')}</button></header>
   <div class="grid">
     <div class="card"><div class="card-title"><span>⚖️</span> ${t('sizing')}</div>
-        <div class="field"><div class="field-row"><label>${t('numPizzas')}</label><input type="number" value="${state.numPizzas}" min="1" step="1" onchange="upd('numPizzas',this.value)"></div></div>
-        <div class="field"><div class="field-row"><label>${t('bunWeight')}</label><input type="number" value="${state.pizzaWeight}" min="50" step="10" onchange="upd('pizzaWeight',this.value)"><span class="unit">g</span></div><div class="note">${t('bunWeightNote')}</div></div>
-        <div class="field"><div class="field-row"><label>${t('semProp')}</label><input type="number" value="${state.semolinaRatio}" min="0" max="100" step="0.1" onchange="upd('semolinaRatio',this.value)"><span class="unit">%</span></div><div class="note">${t('semPropNote')}</div></div>
+        <div class="field"><div class="field-row"><label>${t('numPizzas')}</label><div class="num-wrap"><button class="num-btn" onclick="adj('numPizzas',-1,1)">−</button><input type="number" value="${state.numPizzas}" min="1" step="1" onchange="upd('numPizzas',this.value)"><button class="num-btn" onclick="adj('numPizzas',1,1)">+</button></div></div></div>
+        <div class="field"><div class="field-row"><label>${t('bunWeight')}</label><div class="num-wrap"><button class="num-btn" onclick="adj('pizzaWeight',-10,50)">−</button><input type="number" value="${state.pizzaWeight}" min="50" step="10" onchange="upd('pizzaWeight',this.value)"><button class="num-btn" onclick="adj('pizzaWeight',10,50)">+</button></div><span class="unit">g</span></div><div class="note">${t('bunWeightNote')}</div></div>
+        <div class="field"><div class="field-row"><label>${t('semProp')}</label><div class="num-wrap"><button class="num-btn" onclick="adj('semolinaRatio',-5,0,100)">−</button><input type="number" value="${state.semolinaRatio}" min="0" max="100" step="0.1" onchange="upd('semolinaRatio',this.value)"><button class="num-btn" onclick="adj('semolinaRatio',5,0,100)">+</button></div><span class="unit">%</span></div><div class="note">${t('semPropNote')}</div></div>
     </div>
     <div class="card"><div class="card-title"><span>🥖</span> ${t('doughParams')}</div>
-      <div class="field"><div class="field-row"><label>${t('hydration')} <button class="help-btn" onclick="showTip(event,'hydration')">?</button></label><input type="number" value="${state.hydration}" min="40" max="100" step="0.5" onchange="upd('hydration',this.value)"><span class="unit">%</span></div><div class="note">${t('hydrationNote')}</div></div>
-      <div class="field"><div class="field-row"><label>${t('salt')}</label><input type="number" value="${state.saltPercent}" min="0" max="5" step="0.1" onchange="upd('saltPercent',this.value)"><span class="unit">%</span></div><div class="note">${t('saltNote')}</div></div>
+      <div class="field"><div class="field-row"><label>${t('hydration')} <button class="help-btn" onclick="showTip(event,'hydration')">?</button></label><div class="num-wrap"><button class="num-btn" onclick="adj('hydration',-1,40,100)">−</button><input type="number" value="${state.hydration}" min="40" max="100" step="0.5" onchange="upd('hydration',this.value)"><button class="num-btn" onclick="adj('hydration',1,40,100)">+</button></div><span class="unit">%</span></div><div class="note">${t('hydrationNote')}</div></div>
+      <div class="field"><div class="field-row"><label>${t('salt')}</label><div class="num-wrap"><button class="num-btn" onclick="adj('saltPercent',-0.1,0,5)">−</button><input type="number" value="${state.saltPercent}" min="0" max="5" step="0.1" onchange="upd('saltPercent',this.value)"><button class="num-btn" onclick="adj('saltPercent',0.1,0,5)">+</button></div><span class="unit">%</span></div><div class="note">${t('saltNote')}</div></div>
       <hr class="divider">
       <div class="field"><div class="field-row"><label>${t('bigaFlour')} <button class="help-btn" onclick="showTip(event,'biga')">?</button></label><span class="computed">${state.bigaFlour} g</span></div></div>
       <div class="field"><div class="field-row"><label>${t('bigaWater')}</label><span class="computed">${state.bigaWater} g</span></div><div class="note">${t('bigaNote')}</div></div>
@@ -225,11 +242,11 @@ function render(){
     <div class="card full"><div class="card-title"><span>🌾</span> ${t('proteinContent')}</div>
       <div class="note" style="margin-bottom:14px;margin-top:-8px">${t('proteinNote')}</div>
       <div class="protein-grid">
-        <div class="field"><label>${t('flourProtein')} <button class="help-btn" onclick="showTip(event,'flour')">?</button></label><div class="field-row"><input type="number" value="${state.flourProtein}" min="0" max="100" step="0.1" onchange="upd('flourProtein',this.value)"><span class="unit">%</span></div></div>
-        <div class="field"><label>${t('semProtein')} <button class="help-btn" onclick="showTip(event,'semolina')">?</button></label><div class="field-row"><input type="number" value="${state.semolinaProtein}" min="0" max="100" step="0.1" onchange="upd('semolinaProtein',this.value)"><span class="unit">%</span></div></div>
-        <div class="field"><label>${t('glutenProtein')} <button class="help-btn" onclick="showTip(event,'gluten')">?</button></label><div class="field-row"><input type="number" value="${state.glutenProtein}" min="0" max="100" step="0.1" onchange="upd('glutenProtein',this.value)"><span class="unit">%</span></div></div>
+        <div class="field"><label>${t('flourProtein')} <button class="help-btn" onclick="showTip(event,'flour')">?</button></label><div class="field-row"><div class="num-wrap"><button class="num-btn" onclick="adj('flourProtein',-0.5,0,100)">−</button><input type="number" value="${state.flourProtein}" min="0" max="100" step="0.1" onchange="upd('flourProtein',this.value)"><button class="num-btn" onclick="adj('flourProtein',0.5,0,100)">+</button></div><span class="unit">%</span></div></div>
+        <div class="field"><label>${t('semProtein')} <button class="help-btn" onclick="showTip(event,'semolina')">?</button></label><div class="field-row"><div class="num-wrap"><button class="num-btn" onclick="adj('semolinaProtein',-0.5,0,100)">−</button><input type="number" value="${state.semolinaProtein}" min="0" max="100" step="0.1" onchange="upd('semolinaProtein',this.value)"><button class="num-btn" onclick="adj('semolinaProtein',0.5,0,100)">+</button></div><span class="unit">%</span></div></div>
+        <div class="field"><label>${t('glutenProtein')} <button class="help-btn" onclick="showTip(event,'gluten')">?</button></label><div class="field-row"><div class="num-wrap"><button class="num-btn" onclick="adj('glutenProtein',-0.5,0,100)">−</button><input type="number" value="${state.glutenProtein}" min="0" max="100" step="0.1" onchange="upd('glutenProtein',this.value)"><button class="num-btn" onclick="adj('glutenProtein',0.5,0,100)">+</button></div><span class="unit">%</span></div></div>
       </div><hr class="divider">
-      <div class="field"><div class="field-row"><label>${t('targetProtein')}</label><input type="number" value="${state.targetProtein}" min="0" max="50" step="0.1" style="width:110px;text-align:right" onchange="upd('targetProtein',this.value)"><span class="unit">%</span></div></div>
+      <div class="field"><div class="field-row"><label>${t('targetProtein')}</label><div class="num-wrap"><button class="num-btn" onclick="adj('targetProtein',-0.5,0,50)">−</button><input type="number" value="${state.targetProtein}" min="0" max="50" step="0.1" onchange="upd('targetProtein',this.value)"><button class="num-btn" onclick="adj('targetProtein',0.5,0,50)">+</button></div><span class="unit">%</span></div></div>
     </div>
     <div class="card full"><div class="card-title"><span>📋</span> ${t('recipe')}</div>
       ${r.warning?`<div class="warning-box">${r.warning}</div>`:''}
@@ -254,6 +271,7 @@ function render(){
 }
 
 function upd(k,v){state[k]=parseFloat(v)||0;render()}
+function adj(k,s,mn,mx){let v=Math.round((+(state[k]||0)+s)*1e4)/1e4;if(mn!==undefined&&mn!==null)v=Math.max(+mn,v);if(mx!==undefined&&mx!==null)v=Math.min(+mx,v);state[k]=v;render()}
 function setLang(l){lang=l;render()}
 
 function openGuide(){document.getElementById('modalBody').innerHTML=t('guide');document.getElementById('modalOverlay').classList.add('open')}
