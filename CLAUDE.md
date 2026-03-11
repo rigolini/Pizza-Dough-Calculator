@@ -117,6 +117,18 @@ Opened via a prominent button. Contains:
 
 `?` buttons next to: Hydration, Flour protein, Semolina protein, Gluten protein, Biga — each shows a positioned tooltip with detailed explanation. On phones, tooltips appear as bottom sheets. Tooltip content uses innerHTML (supports `<strong>` tags). All translated.
 
+## Interactive Tutorial
+
+An 8-step guided tutorial with spotlight highlighting and a floating panel:
+- **Step 1 (Welcome)**: larger centred panel, big emoji, no step counter — shown automatically on first visit
+- **Steps 2–8**: compact panel positioned next to the highlighted element, with Back/Next/Skip buttons
+- **Spotlight**: dark overlay with a transparent cutout over the target element (CSS box-shadow technique)
+- **Auto-show**: opens automatically on first visit via `localStorage` (`tutorialSeen` key); never auto-shows again after that
+- **🎓 Tutorial button**: always visible above the 📖 Guide button — same style
+- **Panel positioning**: repositioned after scroll settles (350ms timeout) to avoid off-screen placement; fully clamped within viewport on all 4 edges; on mobile always pinned to bottom
+- **All 5 languages**: 20 translation keys per language (4 UI labels + 8 × title/description pairs)
+- **Survives re-renders**: panel and spotlight live outside `#app` so `render()` calls don't destroy them
+
 ## Common Pitfalls
 
 - **Single-quoted JS strings**: the translation values use single quotes. Be careful with apostrophes in text (e.g. `won't` must be `won\\'t`). The guide sections use backtick template literals where apostrophes are safe.
@@ -131,7 +143,7 @@ Opened via a prominent button. Contains:
 Single file: `index.html` (renamed from `Pizza_Dough_Calculator.html` to serve as GitHub Pages default)
 - `<head>`: meta tags, Open Graph tags, PWA manifest (inline data URI), Apple touch icon (`icon.png`), Google Fonts link
 - `<style>` block: all CSS including 3 responsive breakpoints + touch + safe-area rules + `overflow-x:hidden`
-- `<script>` block: hero image (base64 data URI), presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, service worker registration, install prompt handler
+- `<script>` block: hero image (base64 data URI), presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, tutorial functions (startTutorial, showTutStep, tutGo, endTutorial, positionPanel, centerPanel), service worker registration, install prompt handler
 - No external JS dependencies
 
 ## Additional Files
