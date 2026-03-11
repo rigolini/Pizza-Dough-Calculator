@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#faf6f1;--surface:#fff;--surface2:#f5efe8;--accent:#c0582a;--accent-light:#e8a67a;--accent-pale:#fdf0e6;--text:#3a2e26;--text-dim:#7a6b5e;--text-muted:#a89a8c;--red:#c0392b;--border:#e4dbd1;--border-light:#ede6dd;--input-bg:#faf6f1;--shadow:0 2px 12px rgba(60,40,20,.06)}
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;min-height:100vh}.container{max-width:920px;margin:0 auto;padding:0 24px 80px}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;min-height:100vh;overflow-x:hidden}.container{max-width:920px;margin:0 auto;padding:0 24px 80px}
 .hero{width:100%;height:160px;border-radius:0 0 18px 18px;overflow:hidden;margin-bottom:0;position:relative}
 .hero img{width:100%;height:100%;display:block;object-fit:cover}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(250,246,241,0) 40%,rgba(250,246,241,1) 100%)}
@@ -50,6 +50,7 @@ h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-
   input[type="number"]{padding:10px 10px;font-size:1rem;-webkit-appearance:none;border-radius:10px}
   .protein-grid{grid-template-columns:1fr;gap:10px}
   .recipe-cols{flex-direction:column!important}
+  .recipe-cols{flex-direction:column}
   .recipe-summary{min-width:auto!important;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px;padding:14px 10px}
   .summary-item{flex:1;min-width:70px}
   .summary-value{font-size:1.25rem}
