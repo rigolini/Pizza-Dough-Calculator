@@ -201,7 +201,7 @@ function render(){
         <div class="field"><label>${t('semProtein')} <button class="help-btn" onclick="showTip(event,'semolina')">?</button></label><div class="field-row"><input type="number" value="${state.semolinaProtein}" min="0" max="100" step="0.1" onchange="upd('semolinaProtein',this.value)"><span class="unit">%</span></div></div>
         <div class="field"><label>${t('glutenProtein')} <button class="help-btn" onclick="showTip(event,'gluten')">?</button></label><div class="field-row"><input type="number" value="${state.glutenProtein}" min="0" max="100" step="0.1" onchange="upd('glutenProtein',this.value)"><span class="unit">%</span></div></div>
       </div><hr class="divider">
-      <div class="field"><div class="field-row"><label>${t('targetProtein')}</label><input type="number" value="${state.targetProtein}" min="0" max="50" step="0.1" style="width:110px;text-align:right" onchange="upd('targetProtein',this.value)"><span class="unit">%</span></div><div class="note">${t('glutenAutoNote')} ${r.actualProtein.toFixed(2)}%</div></div>
+      <div class="field"><div class="field-row"><label>${t('targetProtein')}</label><input type="number" value="${state.targetProtein}" min="0" max="50" step="0.1" style="width:110px;text-align:right" onchange="upd('targetProtein',this.value)"><span class="unit">%</span></div></div>
     </div>
     <div class="card full"><div class="card-title"><span>📋</span> ${t('recipe')}</div>
       ${r.warning?`<div class="warning-box">${r.warning}</div>`:''}
