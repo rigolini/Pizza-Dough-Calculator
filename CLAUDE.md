@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A single self-contained HTML file (`Pizza_Dough_Calculator.html`) that calculates pizza dough recipes. Built by Jamele Rigolini. It includes all CSS, JS, translations, and logic in one file — no build tools, no dependencies (except Google Fonts and a hero image loaded from the web). It is also a Progressive Web App (PWA) that can be installed on phones and desktops.
+A single self-contained HTML file (`index.html`) that calculates pizza dough recipes. Built by Jamele Rigolini. It includes all CSS, JS, translations, and logic in one file — no build tools, no dependencies (except Google Fonts). The hero image is embedded as a base64 data URI for full offline support. It is also a Progressive Web App (PWA) that can be installed on phones and desktops, and is deployed on GitHub Pages at `https://rigolini.github.io/Pizza-Dough-Calculator/`.
 
 ## How the Calculation Works
 
@@ -48,7 +48,7 @@ Key facts:
 
 - **Theme**: warm cream/parchment (`--bg:#faf6f1`), terracotta accent (`--accent:#c0582a`)
 - **Fonts**: Playfair Display (headings), Source Sans 3 (body), Source Serif 4 (italic notes) — loaded from Google Fonts
-- **Hero image**: single Italian coastal landscape from Unsplash, same for all presets
+- **Hero image**: single Italian coastal landscape, embedded as base64 data URI (no external request, works offline)
 - **Title sits below the hero image** — no overlap
 - **Cards**: white surface, soft shadow, rounded 14px
 - **Ingredient cards**: emoji icon + large Playfair number + smaller total/biga info
@@ -64,6 +64,8 @@ Key facts:
 - `font-size: 16px` on inputs to prevent iOS auto-zoom
 - Protein grid stacks to single column
 - Recipe summary becomes horizontal row
+- Recipe columns stack vertically (`flex-direction: column`) to prevent horizontal overflow
+- `overflow-x: hidden` on body prevents any sideways scrolling
 - Tooltips slide up from bottom as a sheet
 - Smaller hero image (120px), tighter spacing
 - Safe area padding for notched iPhones (Dynamic Island)
@@ -90,8 +92,9 @@ The file includes everything needed to work as an installable app:
 - **Web App Manifest** (inline via data URI) — app name, icon, theme colour, standalone display
 - **Service Worker** (inline blob) — caches the page for offline use after first visit
 - **Install prompt** — floating "📲 Install App" button appears on Android/Chrome for 15 seconds
-- **Apple meta tags** — `apple-mobile-web-app-capable`, status bar style, touch icon
-- **Requirements**: must be served over HTTPS for PWA features to work (Netlify and GitHub Pages do this automatically)
+- **Apple meta tags** — `apple-mobile-web-app-capable`, status bar style, touch icon (`icon.png`)
+- **Open Graph tags** — `og:title`, `og:description`, `og:image` for WhatsApp/iMessage link previews (uses `icon.png`)
+- **Requirements**: must be served over HTTPS for PWA features to work (deployed on GitHub Pages)
 
 ## Internationalization (i18n)
 
@@ -125,8 +128,12 @@ Opened via a prominent button. Contains:
 
 ## File Structure
 
-Single file: `Pizza_Dough_Calculator.html`
-- `<head>`: meta tags, PWA manifest (inline data URI), Apple touch icon, Google Fonts link
-- `<style>` block: all CSS including 3 responsive breakpoints + touch + safe-area rules
-- `<script>` block: hero image URL, presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, service worker registration, install prompt handler
+Single file: `index.html` (renamed from `Pizza_Dough_Calculator.html` to serve as GitHub Pages default)
+- `<head>`: meta tags, Open Graph tags, PWA manifest (inline data URI), Apple touch icon (`icon.png`), Google Fonts link
+- `<style>` block: all CSS including 3 responsive breakpoints + touch + safe-area rules + `overflow-x:hidden`
+- `<script>` block: hero image (base64 data URI), presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, service worker registration, install prompt handler
 - No external JS dependencies
+
+## Additional Files
+- `icon.png` — custom pizza slice icon used for home screen (apple-touch-icon) and WhatsApp/iMessage preview (og:image)
+- `preview.jpg` — landscape photo extracted from hero image (kept for reference, not actively used)
