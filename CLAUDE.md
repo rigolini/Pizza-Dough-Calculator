@@ -65,10 +65,12 @@ Key facts:
 - Protein grid stacks to single column
 - Recipe summary becomes horizontal row
 - Recipe columns stack vertically (`flex-direction: column`) to prevent horizontal overflow
-- `overflow-x: hidden` on body prevents any sideways scrolling
+- `overflow-x: hidden` on body AND `width:100%;overflow-x:hidden` on container prevents cards exceeding screen width
+- Hero image uses negative margins (`margin-left:-14px; width:calc(100%+28px)`) to be truly full-screen width
 - Tooltips slide up from bottom as a sheet
 - Smaller hero image (120px), tighter spacing
 - Safe area padding for notched iPhones (Dynamic Island)
+- **Custom +/− spinner buttons** on all number inputs (iOS hides native spinners); shown on touch/mobile, hidden on desktop
 
 ### Tablet (481–900px)
 - Single column cards, wider layout
@@ -136,6 +138,7 @@ An 8-step guided tutorial with spotlight highlighting and a floating panel:
 - **Biga is fixed** at 100g flour + 40g water — these values are not user-editable, they're displayed as computed fields.
 - **Salt is included in bun weight** — this is baked into the formula and affects how total flour is derived.
 - **iOS auto-zoom**: input fields must have `font-size: 16px` or larger, otherwise Safari zooms in when the user taps an input.
+- **iOS hides native spinners**: all `<input type="number">` are wrapped in `.num-wrap` with `.num-btn` (−/+) buttons. Use `adj(key, step, min, max)` for the button `onclick`. Buttons are hidden on desktop via CSS (`display:none` by default, shown via `@media(max-width:900px),(hover:none) and (pointer:coarse)`).
 - **Update all 5 languages**: every text change must be made in EN, FR, ES, DE, and IT.
 
 ## File Structure
@@ -143,7 +146,7 @@ An 8-step guided tutorial with spotlight highlighting and a floating panel:
 Single file: `index.html` (renamed from `Pizza_Dough_Calculator.html` to serve as GitHub Pages default)
 - `<head>`: meta tags, Open Graph tags, PWA manifest (inline data URI), Apple touch icon (`icon.png`), Google Fonts link
 - `<style>` block: all CSS including 3 responsive breakpoints + touch + safe-area rules + `overflow-x:hidden`
-- `<script>` block: hero image (base64 data URI), presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, tutorial functions (startTutorial, showTutStep, tutGo, endTutorial, positionPanel, centerPanel), service worker registration, install prompt handler
+- `<script>` block: hero image (base64 data URI), presets, presetNames, presetDescs, translations (T object), state, compute(), render(), tooltip/modal functions, tutorial functions (startTutorial, showTutStep, tutGo, endTutorial, positionPanel, centerPanel), `upd()`, `adj()`, service worker registration, install prompt handler
 - No external JS dependencies
 
 ## Additional Files
